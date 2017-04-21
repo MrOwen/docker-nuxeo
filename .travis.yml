@@ -2,18 +2,26 @@ language: bash
 services: docker
 
 env:
-  - VERSION=master
-  - VERSION=8.10
-  - VERSION=7.10
-  - VERSION=6.0
+ - VERSION=6.0
+ - VERSION=6.0 VARIANT=centos
+ - VERSION=6.0 VARIANT=rhel
+ - VERSION=7.10
+ - VERSION=7.10 VARIANT=centos
+ - VERSION=7.10 VARIANT=rhel
+ - VERSION=8.10
+ - VERSION=8.10 VARIANT=centos
+ - VERSION=8.10 VARIANT=rhel
+ - VERSION=8.3
+ - VERSION=8.3 VARIANT=centos
+ - VERSION=8.3 VARIANT=rhel
 
 install:
   - git clone https://github.com/docker-library/official-images.git ~/official-images
 
 before_script:
   - env | sort
-  - cd "$VERSION"
-  - image="nuxeo/nuxeo:$VERSION"
+  - cd "$VERSION/$VARIANT"
+  - image="nuxeo/nuxeo:$VERSION-$VARIANT"
 
 script:
   - docker build -t "$image" .
